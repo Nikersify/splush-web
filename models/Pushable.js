@@ -5,6 +5,15 @@ module.exports = class Pushable {
 		this.code = code
 	}
 
+	exists () {
+		return new Promise((resolve, reject) => {
+			db.get('code:' + this.code, (err, value) => {
+				if (err && err.notFound) resolve(false)
+				else resolve(true)
+			})
+		})
+	}
+
 	getTarget () {
 		return new Promise((resolve, reject) => {
 			db.get('code:' + this.code, (err, value) => {
