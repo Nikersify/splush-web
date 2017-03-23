@@ -1,0 +1,5 @@
+{
+	"firebase": {
+		"server_key": "get this from settings > project settings > cloud"
+	}
+}
