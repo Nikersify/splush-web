@@ -4,7 +4,8 @@ const config = require('../config')
 
 module.exports = class Pushable {
 	constructor (code) {
-		this.code = code
+		if (!code) this.code = this.generateCode()
+		else this.code = code
 	}
 
 	delete () {
@@ -33,6 +34,16 @@ module.exports = class Pushable {
 		}
 
 		return rp.post(options)
+	}
+
+	static generateCode () {
+		// temporary
+		const g = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
+			'abcdefghijklmnopqrstuvwxyz0123456789'
+
+		return Array.apply(null, Array(3)).map(() => {
+			return g.charAt(Math.floor(Math.random() * g.length))
+		}).join('')
 	}
 
 	getTarget () {
