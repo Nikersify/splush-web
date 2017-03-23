@@ -1,4 +1,5 @@
-node_modules/
+config.json
 junk/
 level_db/
-config.json
+logs/
+node_modules/

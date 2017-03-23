@@ -1,5 +1,11 @@
 {
 	"firebase": {
 		"server_key": "get this from settings > project settings > cloud"
+	},
+	"level": {
+		"path": "./level_db"
+	},
+	"http": {
+		"port": 3030
 	}
 }

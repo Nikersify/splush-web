@@ -1,6 +1,11 @@
 const levelup = require('levelup')
+const log = require('@nikersify/log')
+const path = require('path')
+const config = require('../config')
 
-const db = levelup('./level_db')
+log.info('db', `level path set to ${log.e(path.resolve(config.level.path))}`)
+
+const db = levelup(config.level.path)
 
 module.exports.level = db
 
