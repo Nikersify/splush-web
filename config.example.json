@@ -1,6 +1,7 @@
 {
 	"firebase": {
-		"server_key": "get this from settings > project settings > cloud"
+		"sender_id": "get this from settings > project settings > cloud msg",
+		"server_key": "read above"
 	},
 	"level": {
 		"path": "./level_db"

@@ -1,6 +1,7 @@
 const bodyParser = require('body-parser')
 const log = require('@nikersify/log')
 const router = require('express').Router()
+const config = require('../config')
 const Pushable = require('../models/Pushable')
 
 router.use(bodyParser.urlencoded({
@@ -20,6 +21,11 @@ const errorHandler = (res) => {
 }
 
 router.get('/', (req, res) => res.render('index'))
+
+router.get('/firebaseSenderID.js', (req, res) => {
+	res.setHeader('Content-Type', 'application/javascript')
+	res.send(`FIREBASE_SENDER_ID = '${config.firebase.sender_id}'`)
+})
 
 router.post('/sub', (req, res) => {
 	const target = req.body.target || req.query.target
