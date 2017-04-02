@@ -1,9 +1,10 @@
 html
 	head
-		// link(rel='manifest' href='/manifest.json')
 		title Splush!
+		link(rel='manifest' href='/manifest.json')
 		link(rel='stylesheet' href='/reset.css')
 		link(rel='stylesheet' href='/splush.css')
+		script(src='https://cdn.jsdelivr.net/riot/3.4.0/riot+compiler.min.js')
 		script(src='https://www.gstatic.com/firebasejs/3.7.2/firebase.js')
 		script(src='/firebaseSenderID.js')
 		script(src='/splush.js' defer)
@@ -17,9 +18,7 @@ html
 			.gs
 				.gs--key
 					p You need to generate a key to use splush on this device!
-					.key-display
-						button Enable notifications
-						span CuteTremendousWall
+					key-display
 					p.
 						Remember that you can do the same thing on your mobile
 						device! Only Android is supported at the moment
@@ -40,3 +39,5 @@ html
 						curl https://splush.nikerino.com/CuteTremendousWall/hi!
 
 			.footer created by #[a(href='https://nikerino.com') nikersify] :)
+
+		script(data-src='/tags/key-display.tag' type='riot/tag')
