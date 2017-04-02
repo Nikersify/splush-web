@@ -4,7 +4,7 @@ const config = require('../config')
 
 module.exports = class Pushable {
 	constructor (code) {
-		if (!code) this.code = this.generateCode()
+		if (!code) this.code = this.constructor.generateCode()
 		else this.code = code
 	}
 
