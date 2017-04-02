@@ -25,14 +25,13 @@ Splush.isSupported = function () {
 
 // instance methods
 Splush.prototype.fetchKey = function () {
-	if (this.storage.exists('key')) {
-		var key = this.storage.get('key')
-		this._key = key
-		return Promise.resolve(key)
-	}
-	else
-		var self = this
-		return this.getMessagingToken().then(function (token) {
+	var self = this
+	return this.getMessagingToken().then(function (token) {
+		if (!token) throw 'Firebase token resolved to null. ' +
+			'(allow notifications?)'
+		if (token === self.storage.get('token')) {
+			return Promise.resolve(self.storage.get('key'))
+		} else {
 			var headers = new Headers()
 			headers.append('Content-Type', 'application/x-www-form-urlencoded')
 
@@ -40,20 +39,18 @@ Splush.prototype.fetchKey = function () {
 				body: 'target=' + token,
 				headers: headers,
 				method: 'POST'
+			}).then(function (r) {
+				var key = r.res.code
+				self.storage.set('key', key)
+				self.storage.set('token', token)
+				return Promise.resolve(key)
 			})
-		}).then(function (r) {
-			var key = r.res.code
-			self.storage.set('key', key)
-			self._key = key
-			return Promise.resolve(key)
-		}).catch(function (e) {
-			alert(e)
-		})
+		}
+	}).catch(alert)
 }
 
 Splush.prototype.getMessagingToken = function () {
-	if (this._messagingToken) return new Promise.resolve(this._messagingToken)
-	else return this._messaging.getToken()
+	return this._messaging.getToken()
 }
 
 Splush.prototype.initializeMessaging = function () {
