@@ -12,6 +12,11 @@ module.exports = class Pushable {
 		return db.del('code:' + this.code)
 	}
 
+	// find a record by token
+	static find (token) {
+		return db.find(token, 'code:')
+	}
+
 	exists () {
 		return db.exists('code:' + this.code)
 	}

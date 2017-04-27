@@ -16,6 +16,25 @@ module.exports.del = (field) => new Promise((resolve, reject) => {
 	})
 })
 
+module.exports.find = (value, prefix = '') => new Promise((resolve, reject) => {
+	const stream = db.createReadStream()
+
+	stream.on('data', (data) => {
+		if (data.value === value && data.key.indexOf(prefix) === 0) {
+			stream.destroy()
+
+			// strip out the prefix
+			resolve(data.key.substr(prefix.length))
+		}
+	})
+	.on('end', () => {
+		resolve(null)
+	})
+	.on('error', (err) => {
+		reject(err)
+	})
+})
+
 module.exports.get = (field) => new Promise((resolve, reject) => {
 	db.get(field, (err, value) => {
 		if (err) reject(err)

@@ -35,16 +35,22 @@ router.post('/sub', (req, res) => {
 		success: false
 	})
 
-	const pusher = new Pushable()
+	Pushable.find(target).then((result) => {
+		if (!result) {
+			const pusher = new Pushable()
 
-	pusher.setTarget(target).then(() => {
-		return pusher.push('Success!')
-	}).then(() => {
+			return pusher.setTarget(target).then(() => {
+				return pusher.push('Success!')
+			}).then(() => {
+				return Promise.resolve(pusher.code)
+			})
+		} else return Promise.resolve(result)
+	}).then((code) => {
 		res.json({
 			err: null,
 			success: true,
 			res: {
-				code: pusher.code
+				code: code
 			}
 		})
 	}).catch(errorHandler(res))
