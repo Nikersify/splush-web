@@ -12,8 +12,41 @@ window.fetchJSON = function (url, opts) {
 	})
 }
 
+// trying something different
+var Emitter = function () {
+	return this
+}
+
+Emitter.prototype.listeners = {}
+
+Emitter.prototype.on = function (domain, fn) {
+	if (!fn || !domain) return
+	if (!this.listeners[domain]) this.listeners[domain] = []
+
+	this.listeners[domain].push(fn)
+	return this
+}
+
+Emitter.prototype.off = function (domain, fn) {
+	if (!this.listeners[domain] || !fn || !domain) return
+
+	var index = this.listeners[domain].indexOf(fn)
+	if (index !== -1) array.splice(index, 1)
+
+	return this
+}
+
+Emitter.prototype.emit = function (domain, payload) {
+	if (!this.listeners[domain]) return
+	for (var listener of this.listeners[domain]) listener(payload)
+	return this
+}
+
 // constructor
-var Splush = function () {}
+var Splush = function () {
+	this.events = new Emitter()
+	this.storage.set = this.storage.set.bind(this)
+}
 
 // static methods
 Splush.isSupported = function () {
@@ -26,31 +59,24 @@ Splush.isSupported = function () {
 // instance methods
 Splush.prototype.fetchKey = function () {
 	var self = this
-	return this.getMessagingToken().then(function (token) {
+	return this._messaging.getToken().then(function (token) {
 		if (!token) throw 'Firebase token resolved to null. ' +
 			'(allow notifications?)'
-		if (token === self.storage.get('token')) {
-			return Promise.resolve(self.storage.get('key'))
-		} else {
-			var headers = new Headers()
-			headers.append('Content-Type', 'application/x-www-form-urlencoded')
 
-			return fetchJSON('/sub', {
-				body: 'target=' + token,
-				headers: headers,
-				method: 'POST'
-			}).then(function (r) {
-				var key = r.res.code
-				self.storage.set('key', key)
-				self.storage.set('token', token)
-				return Promise.resolve(key)
-			})
-		}
-	}).catch(alert)
-}
+		var headers = new Headers()
+		headers.append('Content-Type', 'application/x-www-form-urlencoded')
 
-Splush.prototype.getMessagingToken = function () {
-	return this._messaging.getToken()
+		return fetchJSON('/sub', {
+			body: 'target=' + token,
+			headers: headers,
+			method: 'POST'
+		}).then(function (r) {
+			var key = r.res.code
+			self.storage.set('key', key)
+			self.storage.set('token', token)
+			return Promise.resolve(key)
+		})
+	}).catch(console.error)
 }
 
 Splush.prototype.initializeMessaging = function () {
@@ -79,7 +105,10 @@ Splush.prototype.storage = {
 	delete: window.localStorage.removeItem.bind(window.localStorage),
 	get: window.localStorage.getItem.bind(window.localStorage),
 	flush: window.localStorage.clear.bind(window.localStorage),
-	set: window.localStorage.setItem.bind(window.localStorage)
+	set: function (key, val) {
+		this.events.emit('changed-' + key, val)
+		window.localStorage[key] = val
+	}
 }
 
 // main function
@@ -94,9 +123,7 @@ function main () {
 				resolve()
 			})
 		} catch (e) { reject(e) }
-	}).catch(function (e) {
-		alert(e)
-	})
+	}).catch(console.error)
 }
 
 if (Splush.isSupported) main()
