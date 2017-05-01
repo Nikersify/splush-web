@@ -98,15 +98,70 @@ html, body {
 }
 
 .showcase--phone {
+	background-color: #131313;
+	border-radius: 35px 35px 0 0;
+	border: 1px black solid;
+	bottom: 0;
+	box-shadow: 0px 0px 5px black;
+	height: 250px;
 	position: absolute;
 	right: 150px;
-	bottom: 0;
+	transform-origin: bottom;
 	width: 300px;
-	height: 250px;
-	border: 1px black solid;
-	border-radius: 35px 35px 0 0;
-	background-color: #131313;
-	box-shadow: 0px 0px 5px black;
+}
+
+@media (max-width: 1200px) {
+	.showcase--phone {
+		right: 50px;
+	}
+}
+
+@media (max-width: 992px) {
+	.showcase--phone {
+		right: 50px;
+	}
+}
+
+@media (max-width: 800px) {
+	.showcase--terminal {
+		width: 70ch;
+	}
+
+	.showcase--terminal .winside {
+		height: 45ch;
+	}
+
+	.showcase--phone {
+		transform: scale(0.9);
+	}
+}
+
+@media (max-width: 675px) {
+	.showcase--terminal {
+		width: 100%;
+		font-size: 12px;
+	}
+
+	.showcase--terminal .winside {
+		height: 40ch;
+	}
+
+	.showcase--phone {
+		transform: scale(0.6);
+		right: 0;
+	}
+}
+
+@media (max-width: 500px) {
+	.showcase--phone {
+		right: -10%;
+	}
+}
+
+@media (max-width: 400px) {
+	.showcase--phone {
+		display: none;
+	}
 }
 
 .showcase--phone .decor .speaker {
@@ -183,6 +238,7 @@ html, body {
 .showcase--phone .screen .notification {
 	align-items: center;
 	background-color: rgba(0,0,0,0.7);
+	border-radius: 7.5px;
 	border: 1px solid black;
 	box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.48);
 	display: flex;
