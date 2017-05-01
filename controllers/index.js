@@ -41,7 +41,12 @@ router.post('/sub', (req, res) => {
 
 			return pusher.setTarget(target).then(() => {
 				return pusher.push('Success!')
-			}).then(() => {
+			}).then((res) => {
+				if (res.success === 0) throw {
+					reason: 'invalid firebase token',
+					status: 400
+				}
+
 				return Promise.resolve(pusher.code)
 			})
 		} else return Promise.resolve(result)
