@@ -1,4 +1,6 @@
 const rp = require('request-promise')
+const words = require('simple-words')
+
 const db = require('../db')
 const config = require('../config')
 
@@ -42,13 +44,7 @@ module.exports = class Pushable {
 	}
 
 	static generateCode () {
-		// temporary
-		const g = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' +
-			'abcdefghijklmnopqrstuvwxyz0123456789'
-
-		return Array.apply(null, Array(3)).map(() => {
-			return g.charAt(Math.floor(Math.random() * g.length))
-		}).join('')
+		return words.pick(4).map(x => (x[0].toUpperCase() + x.slice(1))).join('')
 	}
 
 	getTarget () {
