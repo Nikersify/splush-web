@@ -101,8 +101,7 @@ html
 						.title Web API
 						.content
 							p Sending a simple HTTP request can do the trick too:
-							code.cmd curl https://splush.nikerino.com/
-								| #[key-display]/hi!
+							code.cmd curl #[origin-display]/#[key-display]/hi!
 					.step(data-n=4)
 						.title That's it!
 		.ui.vertical.inverted.segment
@@ -114,3 +113,4 @@ html
 		script(data-src='/tags/key-gen.tag' type='riot/tag')
 		script(data-src='/tags/key-display.tag' type='riot/tag')
 		script(data-src='/tags/copy-btn.tag' type='riot/tag')
+		script(data-src='/tags/origin-display.tag' type='riot/tag')
