@@ -81,7 +81,7 @@ router.post('/unsub', (req, res) => {
 	}).catch(errorHandler(res))
 })
 
-router.post('/:code/:msg?', (req, res) => {
+const apiHandler = (req, res) => {
 	const code = req.params.code
 	const msg = req.params.msg || req.body.msg || req.query.msg
 
@@ -102,6 +102,8 @@ router.post('/:code/:msg?', (req, res) => {
 			})
 		else throw { reason: 'server error', status: 500 }
 	}).catch(errorHandler(res))
-})
+}
+
+router.route('/:code/:msg?').post(apiHandler).get(apiHandler)
 
 module.exports = router
