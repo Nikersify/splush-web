@@ -3,6 +3,7 @@
 		onclick={ reveal }>Click me!</button>
 
 	<key-display class={ hidden: !showKey }></key-display>
+	<copy-btn text={ key } class={ hidden: !showKey }></copy-btn>
 
 	<style>
 		key-gen {
