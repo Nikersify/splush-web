@@ -30,7 +30,9 @@ module.exports = class Pushable {
 			body: {
 				to: target,
 				notification: {
-					body: msg
+					body: msg,
+					title: 'Splush!',
+					icon: '/img/notification/icon.png'
 				}
 			},
 			headers: {

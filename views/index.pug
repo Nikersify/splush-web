@@ -70,7 +70,7 @@ html
 		.ui.vertical.inverted.segment
 			.ui.divider
 			.ui.container.center.aligned
-				h1.ui.title Getting started
+				h1#gs.ui.title Getting started
 				.steps
 					.step(data-n=1)
 						.title Generate a key
@@ -108,7 +108,11 @@ html
 			.ui.divider
 			.ui.container.right.aligned
 				.footer
-					h3 #[a(href='//nikerino.com') nikersify] made this :)
+					.left
+						h4
+							a(href='//github.com/nikersify/splush-web') GitHub
+					.right
+						h4 #[a(href='//nikerino.com') nikersify] made this :)
 
 		script(data-src='/tags/key-gen.tag' type='riot/tag')
 		script(data-src='/tags/key-display.tag' type='riot/tag')

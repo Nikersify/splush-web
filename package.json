@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "@nikersify/log": "^1.0.0",
     "body-parser": "^1.17.1",

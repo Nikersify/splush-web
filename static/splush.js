@@ -88,7 +88,7 @@ Splush.prototype.initializeMessaging = function () {
 
 	var self = this
 	messaging.onMessage(function (e) {
-		new window.Notification(e.notification.body)
+		new window.Notification(e.notification.title, e.notification)
 	})
 
 	messaging.onTokenRefresh(function () {

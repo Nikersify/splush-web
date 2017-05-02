@@ -88,12 +88,7 @@ router.post('/unsub', (req, res) => {
 
 const apiHandler = (req, res) => {
 	const code = req.params.code
-	const msg = req.params.msg || req.body.msg || req.query.msg
-
-	if (typeof msg === 'undefined') return res.status(400).json({
-		err: 'msg not specified',
-		success: false
-	})
+	const msg = req.params.msg || req.body.msg || req.query.msg || 'Splush!'
 
 	const pusher = new Pushable(code)
 	pusher.exists().then((exists) => {
