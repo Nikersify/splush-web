@@ -13,5 +13,6 @@
     "request": "^2.81.0",
     "request-promise": "^4.2.0",
     "simple-words": "^1.0.2"
-  }
+  },
+  "license": "MIT"
 }
