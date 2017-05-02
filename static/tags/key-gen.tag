@@ -20,6 +20,10 @@
 		.hidden {
 			display: none !important;
 		}
+
+		span {
+			font-weight: bold;
+		}
 	</style>
 
 	reveal (e) {
