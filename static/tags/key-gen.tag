@@ -4,6 +4,7 @@
 
 	<key-display class={ hidden: !showKey }></key-display>
 	<copy-btn text={ key } class={ hidden: !showKey }></copy-btn>
+	<span class="err { hidden: !errorMsg }">{ errorMsg }</span>
 
 	<style>
 		key-gen {
@@ -11,12 +12,13 @@
 			margin-bottom: 1em;
 		}
 
-		.hidden {
-			display: none !important;
+		.err {
+			font-weight: bold;
+			color: red;
 		}
 
-		span {
-			font-weight: bold;
+		.hidden {
+			display: none !important;
 		}
 	</style>
 
@@ -28,6 +30,12 @@
 				this.showKey = true
 				this.update()
 			}
+		}).catch((e) => {
+			if (e === null) e = 'unknown error'
+
+			this.errorMsg = e
+			this.showKey = false
+			this.update()
 		})
 	}
 
@@ -39,5 +47,6 @@
 
 	this.showKey = !!window.splush._key
 	this.key = window.splush._key
+	this.errorMsg = null
 
 </key-gen>

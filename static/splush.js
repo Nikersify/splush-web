@@ -59,24 +59,28 @@ Splush.isSupported = function () {
 // instance methods
 Splush.prototype.fetchKey = function () {
 	var self = this
-	return this._messaging.getToken().then(function (token) {
-		if (!token) throw 'Firebase token resolved to null. ' +
-			'(allow notifications?)'
+	return window.Notification.requestPermission().then((permission) => {
+		if (permission !== 'granted') throw 'Notification permission denied'
 
-		var headers = new Headers()
-		headers.append('Content-Type', 'application/x-www-form-urlencoded')
+		return this._messaging.getToken().then(function (token) {
+			if (!token) throw 'Firebase token resolved to null. ' +
+				'(allow notifications?)'
 
-		return fetchJSON('/sub', {
-			body: 'target=' + token,
-			headers: headers,
-			method: 'POST'
-		}).then(function (r) {
-			var key = r.res.code
-			self.storage.set('key', key)
-			self.storage.set('token', token)
-			return Promise.resolve(key)
+			var headers = new Headers()
+			headers.append('Content-Type', 'application/x-www-form-urlencoded')
+
+			return fetchJSON('/sub', {
+				body: 'target=' + token,
+				headers: headers,
+				method: 'POST'
+			}).then(function (r) {
+				var key = r.res.code
+				self.storage.set('key', key)
+				self.storage.set('token', token)
+				return Promise.resolve(key)
+			})
 		})
-	}).catch(console.error)
+	})
 }
 
 Splush.prototype.initializeMessaging = function () {
@@ -123,9 +127,9 @@ function main () {
 				resolve()
 			})
 		} catch (e) { reject(e) }
-	}).catch(console.error)
+	}).catch(alert)
 }
 
 if (Splush.isSupported) main()
 else
-	window.alert('your browser ain\'t supported')
+	window.alert('Your browser isn\'t supported!')
