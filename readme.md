@@ -2,7 +2,7 @@
 
 code behind https://splush.nikerino.com
 
-see the splush-cli repo [here](https://github.com/nikersify/splush-cli)
+see the splush client repo [here](https://github.com/nikersify/splush)
 
 # api
 
