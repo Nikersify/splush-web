@@ -8,5 +8,8 @@
 	},
 	"http": {
 		"port": 3030
+	},
+	"ga": {
+		"id": "google analytics track id"
 	}
 }
