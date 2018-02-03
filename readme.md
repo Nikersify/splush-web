@@ -1,5 +1,7 @@
 # splush-web
 
+[![Screenshot](/media/screenshot.png)](https://splush.nikerino.com)
+
 code behind https://splush.nikerino.com
 
 see the splush client repo [here](https://github.com/nikersify/splush)
