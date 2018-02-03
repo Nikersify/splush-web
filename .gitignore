@@ -3,3 +3,4 @@ junk/
 level_db/
 logs/
 node_modules/
+yarn.lock
