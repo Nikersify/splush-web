@@ -247,9 +247,10 @@ html, body {
 }
 
 .showcase--phone .screen .notification .ico {
-	font-size: 50px;
+	font-size: 25px;
 	line-height: 100%;
-	margin-left: 7px;
+	margin-left: 15px;
+	margin-right: 5px;
 }
 
 .showcase--phone .screen .notification .text {
