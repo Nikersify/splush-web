@@ -8,6 +8,5 @@
 	})
 
 	this.key = window.splush._key || '[...]'
-
 </key-display>
 

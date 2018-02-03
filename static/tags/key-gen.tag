@@ -1,20 +1,18 @@
 <key-gen>
-	<button	class="ui button primary { hidden: showKey }"
-		onclick={ reveal }>Click me!</button>
+	<button	class="ui button
+		{ primary: !splush.errorMsg }
+		{ negative: splush.errorMsg }
+		{ disabled: splush.errorMsg }
+		{ hidden: showKey }"
+		onclick={ reveal }>{ splush.errorMsg ? splush.errorMsg + ' :(' : 'Click me!'}</button>
 
 	<key-display class={ hidden: !showKey }></key-display>
 	<copy-btn text={ key } class={ hidden: !showKey }></copy-btn>
-	<span class="err { hidden: !errorMsg }">{ errorMsg }</span>
 
 	<style>
 		key-gen {
 			display: block;
 			margin-bottom: 1em;
-		}
-
-		.err {
-			font-weight: bold;
-			color: red;
 		}
 
 		.hidden {
@@ -35,9 +33,11 @@
 				this.update()
 			}
 		}).catch((e) => {
-			if (e === null) e = 'unknown error'
+			if (e === null) {
+				e = 'Unknown error'
+			}
 
-			this.errorMsg = e
+			window.splush.errorMsg = e
 			this.showKey = false
 			this.update()
 		})
@@ -49,8 +49,12 @@
 		self.update()
 	})
 
+	window.splush.events.on('error-msg', function () {
+		self.update()
+	})
+
 	this.showKey = !!window.splush._key
 	this.key = window.splush._key
 	this.errorMsg = null
-
+	this.splush = window.splush
 </key-gen>

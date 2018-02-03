@@ -46,14 +46,17 @@ Emitter.prototype.emit = function (domain, payload) {
 var Splush = function () {
 	this.events = new Emitter()
 	this.storage.set = this.storage.set.bind(this)
+	this.errorMsg = null
 }
 
 // static methods
 Splush.isSupported = function () {
-	return !window.Notification
-		|| !window.ServiceWorker
-		|| !window.Promise
-		|| !window.fetch
+	return !(
+		!window.Notification ||
+		!window.ServiceWorker ||
+		!window.Promise ||
+		!window.fetch
+	)
 }
 
 // instance methods
@@ -118,18 +121,17 @@ Splush.prototype.storage = {
 // main function
 function main () {
 	var splush = window.splush = new Splush()
-	splush.initializeMessaging()
 
-	new Promise(function (resolve, reject) {
-		try {
-			riot.compile(function () {
-				splush.tags = riot.mount('*')
-				resolve()
-			})
-		} catch (e) { reject(e) }
-	}).catch(alert)
+	riot.compile(function () {
+		splush.tags = riot.mount('*')
+
+		if (Splush.isSupported()) {
+			splush.initializeMessaging()
+		} else {
+			splush.errorMsg = 'Browser not supported'
+			splush.events.emit('error-msg')
+		}
+	})
 }
 
-if (Splush.isSupported) main()
-else
-	window.alert('Your browser isn\'t supported!')
+main()
